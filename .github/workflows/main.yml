@@ -32,4 +32,18 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          cd ..
           git clone https://github.com/machinamentum/Selena.git
+          cd SelenaCC
+          #mkdir -p extlibs/lua/
+          cp -r ../Selena/* .
+          #cp -r ../lua/*.h* extlibs/lua/
+          #cp -r ../lua/*.md extlibs/lua/
+          #RenderD7
+          #config
+          git config --global user.email "tobid7@outlook.de"
+          git config --global user.name "Tobi-D7"
+          #commit
+          git stage *
+          git commit -m "update extlibs"
+          git push origin main
