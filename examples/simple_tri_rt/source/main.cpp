@@ -125,7 +125,7 @@ int main()
 
 	// Initialize the render target
 	C3D_RenderTarget* target = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
-	C3D_RenderTargetSetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
+	
 	C3D_RenderTargetSetOutput(target, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
 
 	// Initialize the scene
@@ -143,6 +143,7 @@ int main()
 
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+                        C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 			C3D_FrameDrawOn(target);
 			sceneRender();
 		C3D_FrameEnd(0);
