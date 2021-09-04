@@ -45,6 +45,7 @@ jobs:
           mkdir build && cd build
           cmake ..
           make
+          ls -r *
           mkdir -p ~/artifacts
           cp selenacc ~/artifacts
           cp libselena.a ~/artifacts
