@@ -31,7 +31,8 @@ static void* vbo_data;
 
 static char* vshader_shbin;
 static int   vshader_shbin_size;
-
+extern "C"
+{
 static void sceneInit(void)
 {
 	// Load the vertex shader, create a shader program and bind it
@@ -71,7 +72,7 @@ static void sceneInit(void)
 	C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 }
-
+}
 static void sceneRender(void)
 {
 	// Update the uniforms
