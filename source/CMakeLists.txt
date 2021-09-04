@@ -1,5 +1,5 @@
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -g -mfloat-abi=hard")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -g")
 SET(CMAKE_C_COMPILER $ENV{DEVKITARM}/bin/arm-none-eabi-gcc)
 SET(CMAKE_CXX_COMPILER $ENV{DEVKITARM}/bin/arm-none-eabi-g++)
 SET(CMAKE_AR $ENV{DEVKITARM}/bin/arm-none-eabi-ar)
