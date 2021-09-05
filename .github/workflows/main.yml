@@ -120,7 +120,7 @@ jobs:
           ls -R
           mkdir -p builds/simple_tri_ct/
           cd builds/simple_tri_ct/
-          cp ${{ github.workspace }}/build/* .
+          cp ${{ github.workspace }}/build/simple_tri_ct.3dsx .
           git stage .
           git commit -m "CtrGL sample | $COMMIT_HASH"
           git tag v$CURRENT_DATE
