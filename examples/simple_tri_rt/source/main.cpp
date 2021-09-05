@@ -69,7 +69,7 @@ static void sceneInit(void)
 	// See https://www.opengl.org/sdk/docs/man2/xhtml/glTexEnv.xml for more insight
 	C3D_TexEnv* env = C3D_GetTexEnv(0);
 	C3D_TexEnvInit(env);
-	C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
+	C3D_TexEnvSrc(env, C3D_Both, 0, 0, 0);
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 }
 }
