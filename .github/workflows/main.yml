@@ -43,7 +43,7 @@ jobs:
         id: build
         run: |
           mkdir build && cd build
-          cmake ..
+          cmake ..  -DUSE_DMA_TRANSFERS=ON
           make
           make install
           ls -r *
