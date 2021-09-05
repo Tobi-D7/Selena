@@ -115,7 +115,7 @@ jobs:
           cd nightlys
           #sudo chmod +x nightlytool
           echo running
-          £./nightlytool management/CtrGL-samples.ini simple_tri NPI-D7 nightlys v$CURRENT_DATE $COMMIT_HASH "\\$COMMIT_SUBJECT\\$COMMIT_MESSAGE\\\\" 1 "$AUTHOR_NAME"
+          #./nightlytool management/CtrGL-samples.ini simple_tri NPI-D7 nightlys v$CURRENT_DATE $COMMIT_HASH "\\$COMMIT_SUBJECT\\$COMMIT_MESSAGE\\\\" 1 "$AUTHOR_NAME"
           echo creating dirs
           ls -R
           mkdir -p builds/simple_tri_ct/
