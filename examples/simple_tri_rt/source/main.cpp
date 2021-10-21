@@ -16,8 +16,8 @@ typedef struct { float x, y, z; } vertex;
 static const vertex vertex_list[] =
 {
 	{ 200.0f, 200.0f, 0.5f },
-	{ 100.0f, 40.0f, 0.5f },
-	{ 300.0f, 40.0f, 0.5f },
+	{ 100.0f, 50.0f, 0.5f },
+	{ 300.0f, 50.0f, 0.5f },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
