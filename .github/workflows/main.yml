@@ -54,9 +54,9 @@ jobs:
           cd ../examples/simple_tri_ct
           make
           cp simple_tri_ct.3dsx ~/artifacts
-          #cd ../simple_tri_rt
-          #make
-          #cp simple_tri_rt.3dsx ~/artifacts
+          cd ../simple_tri_rt
+          make
+          cp simple_tri_rt.3dsx ~/artifacts
           echo ::set-output name=commit_tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=commit_hash::$(git log --format=%h -1)
           # Webhook info
@@ -125,20 +125,3 @@ jobs:
           git commit -m "CtrGL sample | $COMMIT_HASH"
           git tag v$CURRENT_DATE
           git push origin master v$CURRENT_DATE
-      - name: Release to idk
-        run: |
-          ls ${{ github.workspace }}/build
-          AUTH_HEADER="Authorization: token ${{ secrets.TOKEN }}"
-          CONTENT_TYPE="Content-Type: application/json"
-          API_URL="https://api.github.com/repos/NPI-D7/nightlys/releases"
-          RELEASE_INFO="{\"tag_name\": \"v${{ steps.commit.outputs.current_date }}\", \"name\": \"CtrGL sample | $COMMIT_HASH\", \"body\": \"$AUTHOR_NAME - $COMMIT_SUBJECT\\n\\n$COMMIT_MESSAGE\", \"prerelease\": true}"
-          RESPONSE=$(curl -XPOST -H "$AUTH_HEADER" -H "$CONTENT_TYPE" "$API_URL" -d "$RELEASE_INFO")
-          ID=$(echo $RESPONSE | jq --raw-output '.id')
-          for file in ${{ github.workspace }}/build/*; do
-            AUTH_HEADER="Authorization: token ${{ secrets.TOKEN }}"
-            CONTENT_LENGTH="Content-Length: $(stat -c%s $file)"
-            CONTENT_TYPE="Content-Type: application/7z-x-compressed"
-            UPLOAD_URL="https://uploads.github.com/repos/NPI-D7/nightlys/releases/$ID/assets?name=$(basename $file)"
-            curl -XPOST -H "$AUTH_HEADER" -H "$CONTENT_LENGTH" -H "$CONTENT_TYPE" --upload-file "$file" "$UPLOAD_URL"
-          done
-# lol
