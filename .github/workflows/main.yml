@@ -37,15 +37,15 @@ jobs:
           make install
           ls -r *
           mkdir -p ~/artifacts
-          cp selenacc ~/artifacts
+          #cp selenacc ~/artifacts
           cp source/libselena.a ~/artifacts
           cp -r ../include ~/artifacts
           cd ../examples/simple_tri_ct
+          #make
+          #cp simple_tri_ct.3dsx ~/artifacts
+          cd ../simple_tri_rt
           make
-          cp simple_tri_ct.3dsx ~/artifacts
-          //cd ../simple_tri_rt
-          //make
-          //cp simple_tri_rt.3dsx ~/artifacts
+          cp simple_tri_rt.3dsx ~/artifacts
           echo ::set-output name=commit_tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=commit_hash::$(git log --format=%h -1)
           # Webhook info
