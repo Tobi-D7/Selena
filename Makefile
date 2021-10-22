@@ -95,6 +95,7 @@ $(BUILD): lib
 #---------------------------------------------------------------------------------
 install:
 	@cp lib/* $(DEVKITPRO)/libctru/lib/
+	mkdir $(DEVKITPRO)/libctru/include/selena/
 	@cp -r include/* $(DEVKITPRO)/libctru/include/selena/
 #---------------------------------------------------------------------------------
 clean:
