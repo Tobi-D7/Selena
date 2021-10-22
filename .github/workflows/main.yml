@@ -40,14 +40,14 @@ jobs:
           #cp selenacc ~/artifacts
           cp lib/libselena.a ~/artifacts
           cp -r include ~/artifacts
-          mkdir build && cd build
+          mkdir cmbuild && cd cmbuild
           cmake ..
           make
           make install
           cp selenacc ~/artifacts
           cd ../examples/simple_tri_ct
-          #make
-          #cp simple_tri_ct.3dsx ~/artifacts
+          make
+          cp simple_tri_ct.3dsx ~/artifacts
           cd ../simple_tri_rt
           make
           cp simple_tri_rt.3dsx ~/artifacts
