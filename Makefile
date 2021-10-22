@@ -94,8 +94,8 @@ $(BUILD): lib
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 #---------------------------------------------------------------------------------
 install:
-       cp lib/* $(DEVKITPRO)/libctru/lib/
-       cp -r include/* $(DEVKITPRO)/libctru/include/selena/
+        @cp lib/* $(DEVKITPRO)/libctru/lib/
+        @cp -r include/* $(DEVKITPRO)/libctru/include/selena/
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
