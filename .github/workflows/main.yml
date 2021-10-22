@@ -38,8 +38,13 @@ jobs:
           ls -r *
           mkdir -p ~/artifacts
           #cp selenacc ~/artifacts
-          cp source/libselena.a ~/artifacts
-          cp -r ../include ~/artifacts
+          cp lib/libselena.a ~/artifacts
+          cp -r include ~/artifacts
+          mkdir build && cd build
+          cmake ..
+          make
+          make install
+          cp selenacc ~/artifacts
           cd ../examples/simple_tri_ct
           #make
           #cp simple_tri_ct.3dsx ~/artifacts
