@@ -33,8 +33,6 @@ jobs:
       - name: Build
         id: build
         run: |
-          mkdir build && cd build
-          cmake ..  -DUSE_DMA_TRANSFERS=ON
           make
           make install
           ls -r *
