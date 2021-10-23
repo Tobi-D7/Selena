@@ -111,7 +111,7 @@ jobs:
           ls -R
           mkdir -p builds/Selena/
           cd builds/Selena/
-          cp ${{ github.workspace }}/build/simple_tri_ct.3dsx .
+          cp ${{ github.workspace }}/build/*.3dsx .
           git stage .
           git commit -m "CtrGL sample | $COMMIT_HASH"
           git tag v$CURRENT_DATE
