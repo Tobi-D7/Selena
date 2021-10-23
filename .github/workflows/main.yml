@@ -45,12 +45,9 @@ jobs:
           make
           make install
           cp selenacc ~/artifacts
-          cd ../examples/simple_tri_ct
+          cd ../examples
           make
-          cp simple_tri_ct.3dsx ~/artifacts
-          cd ../simple_tri_rt
-          make
-          cp simple_tri_rt.3dsx ~/artifacts
+          cp bin/* ~/artifacts
           echo ::set-output name=commit_tag::$(git describe --abbrev=0 --tags)
           echo ::set-output name=commit_hash::$(git log --format=%h -1)
           # Webhook info
@@ -112,8 +109,8 @@ jobs:
           #./nightlytool management/CtrGL-samples.ini simple_tri NPI-D7 nightlys v$CURRENT_DATE $COMMIT_HASH "\\$COMMIT_SUBJECT\\$COMMIT_MESSAGE\\\\" 1 "$AUTHOR_NAME"
           echo creating dirs
           ls -R
-          mkdir -p builds/simple_tri_ct/
-          cd builds/simple_tri_ct/
+          mkdir -p builds/Selena/
+          cd builds/Selena/
           cp ${{ github.workspace }}/build/simple_tri_ct.3dsx .
           git stage .
           git commit -m "CtrGL sample | $COMMIT_HASH"
