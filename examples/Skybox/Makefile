@@ -39,13 +39,13 @@ BUILD		:=	build
 SOURCES		:=      source
 DATA		:=	data
 INCLUDES	:=.     $(SOURCES)
-#GRAPHICS	:=	assets/gfx
+GRAPHICS	:=	gfx
 #GFXBUILD	:=	$(BUILD)
 APP_AUTHOR	:=	Tobi-D7
 APP_DESCRIPTION := An example.
 #ICON		:=	app/icon.png
 ROMFS		:=	romfs
-#GFXBUILD	:=	$(ROMFS)/gfx
+GFXBUILD	:=	$(ROMFS)/
 EXTTOOLS	:=  tools
 
 #---------------------------------------------------------------------------------
