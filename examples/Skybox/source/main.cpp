@@ -163,7 +163,9 @@ static void sceneRender(void)
 {
 	// Calculate the modelView matrix
 	C3D_Mtx modelView;
+        printf("gen mtx\n");
 	Mtx_Identity(&modelView);
+        printf("set ident\n");
 	Mtx_RotateX(&modelView, angleX, true);
 	Mtx_RotateY(&modelView, angleY, true);
         printf("mtx calculated\n");
@@ -259,7 +261,7 @@ int main()
 			angleY -= C3D_AngleFromDegrees(2.0f);
 		else if (kHeld & KEY_RIGHT)
 			angleY += C3D_AngleFromDegrees(2.0f);
-
+                printf("stuff\n");
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
