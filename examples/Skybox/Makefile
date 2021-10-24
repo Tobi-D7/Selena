@@ -45,7 +45,7 @@ APP_AUTHOR	:=	Tobi-D7
 APP_DESCRIPTION := An example.
 #ICON		:=	app/icon.png
 ROMFS		:=	romfs
-GFXBUILD	:=	$(ROMFS)/
+GFXBUILD	:=	$(ROMFS)/gfx/
 EXTTOOLS	:=  tools
 
 #---------------------------------------------------------------------------------
