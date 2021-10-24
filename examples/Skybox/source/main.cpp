@@ -7,6 +7,11 @@
 #include <cstring>
 #include <fstream>
 #include <selena/compiler.h>
+
+static char* vshader_shbin;
+static int   vshader_shbin_size;
+extern "C"
+{
 #define CLEAR_COLOR 0x68B0D8FF
 
 #define DISPLAY_TRANSFER_FLAGS \
@@ -108,10 +113,7 @@ static bool loadTextureFromFile(C3D_Tex* tex, C3D_TexCube* cube, const char* pat
 	Tex3DS_TextureFree(t3x);
 	return true;
 }
-static char* vshader_shbin;
-static int   vshader_shbin_size;
-extern "C"
-{
+
 static void sceneInit(void)
 {
 	// Load the vertex shader, create a shader program and bind it
