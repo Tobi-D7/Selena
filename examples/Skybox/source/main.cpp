@@ -264,8 +264,11 @@ int main()
                 printf("stuff\n");
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+                printf("framebegin\n");
 			C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
+                printf("clear\n");
 			C3D_FrameDrawOn(target);
+                printf("set\n");
 			sceneRender();
 		C3D_FrameEnd(0);
 	}
