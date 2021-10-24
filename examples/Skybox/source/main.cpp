@@ -216,17 +216,21 @@ int main()
 {
 	// Initialize graphics
 	gfxInitDefault();
+        consoleInit(GFX_BOTTOM, NULL);
         romfsInit();
+        printf("compile shader\n");
         loadShader("romfs:/vshader.vsh");
+        printf("success\n");
+        printf("init c3d\n");
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
 
 	// Initialize the render target
 	C3D_RenderTarget* target = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
 	C3D_RenderTargetSetOutput(target, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
-
+        
 	// Initialize the scene
 	sceneInit();
-
+        printf("scene initialisizrd\n");
 	// Main loop
 	while (aptMainLoop())
 	{
