@@ -113,7 +113,7 @@ extern "C"
 static void sceneInit(void)
 {
 	// Load the vertex shader, create a shader program and bind it
-	skybox_dvlb = DVLB_ParseFile((u32*)skybox_shbin, skybox_shbin_size);
+	skybox_dvlb = DVLB_ParseFile((u32*)vshader_shbin, vshader_shbin_size);
 	shaderProgramInit(&program);
 	shaderProgramSetVsh(&program, &skybox_dvlb->DVLE[0]);
 	C3D_BindProgram(&program);
@@ -184,12 +184,36 @@ static void sceneExit(void)
 	shaderProgramFree(&program);
 	DVLB_Free(skybox_dvlb);
 }
+static char *SlurpFile(const char *FilePath, long *FileSize) {
+  std::ifstream is(FilePath);
+  if (!is)
+    return nullptr;
+  is.seekg(0, std::ios::end);
+  long Length = is.tellg();
+  is.seekg(0, std::ios::beg);
+  char *Buffer = new char[Length + 1];
+  memset(Buffer, 0, Length);
+  is.read(Buffer, Length);
+  is.close();
+
+  if (FileSize)
+    *FileSize = Length;
+  return Buffer;
+}
+
+static void loadShader(const char* path)
+{
+  long Size;
+  char *Src = SlurpFile(path, &Size);
+  vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
+}
 
 int main()
 {
-	// Initialize libs
-	romfsInit();
+	// Initialize graphics
 	gfxInitDefault();
+        romfsInit();
+        loadShader("romfs:/vshader.vsh");
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
 
 	// Initialize the render target
