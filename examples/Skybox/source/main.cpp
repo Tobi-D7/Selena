@@ -125,7 +125,7 @@ static void sceneInit(void)
 
 	// Get the location of the uniforms
 	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "projection");
-	uLoc_modelView  = shaderInstanceGetUniformLocation(program.vertexShader, "modelView");
+	uLoc_modelView  = shaderInstanceGetUniformLocation(program.vertexShader, "view");
 
 	// Configure attributes for use with the vertex shader
 	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
@@ -166,11 +166,11 @@ static void sceneRender(void)
 	Mtx_Identity(&modelView);
 	Mtx_RotateX(&modelView, angleX, true);
 	Mtx_RotateY(&modelView, angleY, true);
-
+        printf("mtx calculated\n");
 	// Update the uniforms
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelView,  &modelView);
-
+        printf("uniforms updated\n");
 	// Draw the VBO
 	C3D_CullFace(GPU_CULL_FRONT_CCW);
 	C3D_DrawArrays(GPU_TRIANGLES, 0, vertex_list_count);
