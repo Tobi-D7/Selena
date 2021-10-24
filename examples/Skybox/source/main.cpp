@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <cstring>
+#include <fstream>
+#include <selena/compiler.h>
 #define CLEAR_COLOR 0x68B0D8FF
 
 #define DISPLAY_TRANSFER_FLAGS \
