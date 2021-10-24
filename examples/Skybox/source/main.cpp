@@ -106,7 +106,10 @@ static bool loadTextureFromFile(C3D_Tex* tex, C3D_TexCube* cube, const char* pat
 	Tex3DS_TextureFree(t3x);
 	return true;
 }
-
+static char* vshader_shbin;
+static int   vshader_shbin_size;
+extern "C"
+{
 static void sceneInit(void)
 {
 	// Load the vertex shader, create a shader program and bind it
@@ -151,7 +154,7 @@ static void sceneInit(void)
 	C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE0, 0, 0);
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 }
-
+}
 static void sceneRender(void)
 {
 	// Calculate the modelView matrix
