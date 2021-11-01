@@ -1,22 +1,4 @@
-Skip to content
-devkitPro
-/
-3ds-examples
-Public
-Code
-Issues
-1
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-3ds-examples/graphics/gpu/normal_mapping/source/vshader.v.pica
-@fincs
-fincs Add graphics/gpu/normal_mapping example
- 1 contributor
-148 lines (130 sloc)  3.15 KB
+
 ; Example PICA200 vertex shader
 
 ; Uniforms
@@ -165,15 +147,3 @@ fincs Add graphics/gpu/normal_mapping example
 	; We're finished
 	end
 .end
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
