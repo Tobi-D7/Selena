@@ -1,9 +1,5 @@
 uniform mat4 Projection, ModelView;
 // Constants
-const float zeros = 0.0;
-const float ones = 1.0;
-const float twos = 2.0;
-const float half = 0.5;
 layout (location = 2) in vec4 normal;
 layout (location = 3) in vec4 tangent;
 layout (location = 4) in vec4 intex;
