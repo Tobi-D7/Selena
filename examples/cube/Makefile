@@ -33,31 +33,13 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-#D7CE		:=  RenderD7-alpha0-6-0 RenderD7-alpha0-6-0/internal RenderD7-alpha0-6-0/external RenderD7-alpha0-6-0/external/tween-engine/include/ RenderD7-alpha0-6-0/external/tween-engine/include/TweenEngine RenderD7-alpha0-6-0/external/tween-engine/source \
-#RenderD7-alpha0-6-0/internal/shaders RenderD7-alpha0-6-0/internal/renderer RenderD7-alpha0-6-0/internal/renderer/drawebles \
-#RenderD7-alpha0-6-0/internal/renderer/drawebles/mesh
-SOURCES		:=      source
+SOURCES		:=	source
 DATA		:=	data
-INCLUDES	:=.     $(SOURCES)
+INCLUDES	:=	include
 GRAPHICS	:=	gfx
-#GFXBUILD	:=	$(BUILD)
-APP_AUTHOR	:=	Tobi-D7
-APP_DESCRIPTION := An example.
-#ICON		:=	app/icon.png
-ROMFS		:=	romfs
 GFXBUILD	:=	$(BUILD)
-EXTTOOLS	:=  tools
-
-#---------------------------------------------------------------------------------
-# External tools...
-#---------------------------------------------------------------------------------
-ifeq ($(OS),Windows_NT)
-BANNERTOOL ?= bannertool.exe
-
-else
-BANNERTOOL ?= bannertool
-
-endif
+#ROMFS		:=	romfs
+#GFXBUILD	:=	$(ROMFS)/gfx
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -65,23 +47,23 @@ endif
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
 CFLAGS	:=	-g -Wall -O2 -mword-relocations \
-			-fomit-frame-pointer -ffunction-sections \
+			-ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS -D_GNU_SOURCE=1
+CFLAGS	+=	$(INCLUDE) -D__3DS__
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lselena -lm -lcitro3d -lctru -lstdc++
+LIBS	:= -lcitro3d -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CTRULIB) $(PORTLIBS)
+LIBDIRS	:= $(CTRULIB)
 
 
 #---------------------------------------------------------------------------------
@@ -106,7 +88,6 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 PICAFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.v.pica)))
 SHLISTFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.shlist)))
 GFXFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.t3s)))
-VSHFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.vsh)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
 #---------------------------------------------------------------------------------
@@ -182,7 +163,7 @@ endif
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	
+
 $(BUILD):
 	@mkdir -p $@
 
@@ -249,23 +230,25 @@ define shader-as
 	bin2s $(CURBIN) | $(AS) -o $*.shbin.o
 endef
 
-%.shbin.o : %.vsh %.gsh
+%.shbin.o %_shbin.h : %.v.pica %.g.pica
 	@echo $(notdir $^)
 	@$(call shader-as,$^)
 
-%.shbin.o : %.v.pica
+%.shbin.o %_shbin.h : %.v.pica
 	@echo $(notdir $<)
 	@$(call shader-as,$<)
 
-%.shbin.o : %.vsh
+%.shbin.o %_shbin.h : %.shlist
 	@echo $(notdir $<)
-	@$(call shader-as,$<)
+	@$(call shader-as,$(foreach file,$(shell cat $<),$(dir $<)$(file)))
 
-%.shbin.o : %.shlist
+#---------------------------------------------------------------------------------
+%.t3x	%.h	:	%.t3s
+#---------------------------------------------------------------------------------
 	@echo $(notdir $<)
-	@$(call shader-as,$(foreach file,$(shell cat $<),$(dir $<)/$(file)))
+	@tex3ds -i $< -H $*.h -d $*.d -o $*.t3x
 
--include $(DEPENDS)
+-include $(DEPSDIR)/*.d
 
 #---------------------------------------------------------------------------------------
 endif
