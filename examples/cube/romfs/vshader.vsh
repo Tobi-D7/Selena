@@ -14,6 +14,7 @@ out outnq;
 void main() {
   outtc0 = intex;
   outtc1 = intex;
+  outvertex = ModelView;
   gl_Position = Projection * Position;
   gl_FrontColor = v1;
   asm("end");
