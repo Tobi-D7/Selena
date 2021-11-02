@@ -2,7 +2,7 @@
 #version 330 core
 layout (location = 0) in vec4 aPos;
 
-out vec3 outtc0 texcoord0.st;
+out vec3 outtc0;
 
 uniform mat4 projection;
 uniform mat4 view;
