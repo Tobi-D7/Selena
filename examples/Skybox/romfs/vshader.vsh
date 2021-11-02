@@ -11,4 +11,5 @@ void main()
 {
     outtc0 = aPos;
     gl_Position = projection * view * vec4(aPos, 1.0);
+    asm("end");
 }  
