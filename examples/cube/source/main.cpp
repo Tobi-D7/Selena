@@ -250,8 +250,8 @@ int main()
 		float iod = slider/3;
 
 		// Rotate the cube each frame
-		//angleX += C3D_AngleFromDegrees(1.0);
-		//angleY += C3D_AngleFromDegrees(0.5);
+		angleX += C3D_AngleFromDegrees(0.2);
+		angleY += C3D_AngleFromDegrees(0.1);
 
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
