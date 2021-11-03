@@ -263,6 +263,7 @@ int main(int argc, char **argv) {
     printf("error: no such file or directory: \'%s\'\n", InputFilePath);
     return -1;
   }
+  std::cout << Source << std::endl;
   LexerInit(&Lexer, Source, Source + Size, &SymbolTable);
   parser Parser = parser(Lexer);
   Parser.ErrorFunc = ErrorCallback;
