@@ -251,7 +251,7 @@ int main(int argc, char **argv) {
       }
     }
   }
-  OutputASM = false;
+  OutputASM = true;
   lexer_state Lexer;
   long Size;
   if (!InputFilePath) {
