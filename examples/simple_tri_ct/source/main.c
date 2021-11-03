@@ -71,6 +71,7 @@ static void sceneInit(void)
 
 static void sceneRender(void)
 {
+        printf("update uniforms");
 	// Update the uniforms
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection);
 
