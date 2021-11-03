@@ -1,6 +1,5 @@
 #include <3ds.h>
 #include <citro3d.h>
-#include <stdio.h>
 #include <string.h>
 #include "vshader_shbin.h"
 
@@ -15,9 +14,9 @@ typedef struct { float x, y, z; } vertex;
 
 static const vertex vertex_list[] =
 {
-	{ 200.0f, 200.0f, 0.5f },
-	{ 100.0f, 40.0f, 0.5f },
-	{ 300.0f, 40.0f, 0.5f },
+	{    0.0f, 200.0f, 0.5f },
+	{ -100.0f,  40.0f, 0.5f },
+	{ +100.0f,  40.0f, 0.5f },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -25,7 +24,7 @@ static const vertex vertex_list[] =
 static DVLB_s* vshader_dvlb;
 static shaderProgram_s program;
 static int uLoc_projection;
-static C3D_Mtx projection;
+static C3D_Mtx projectionTop, projectionBot;
 
 static void* vbo_data;
 
@@ -36,10 +35,10 @@ static void sceneInit(void)
 	shaderProgramInit(&program);
 	shaderProgramSetVsh(&program, &vshader_dvlb->DVLE[0]);
 	C3D_BindProgram(&program);
-        printf("initshader");
+
 	// Get the location of the uniforms
 	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "Projection");
-        printf("loqdet shader");
+
 	// Configure attributes for use with the vertex shader
 	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
 	AttrInfo_Init(attrInfo);
@@ -50,7 +49,8 @@ static void sceneInit(void)
 	C3D_FixedAttribSet(1, 1.0, 1.0, 1.0, 1.0);
 
 	// Compute the projection matrix
-	Mtx_OrthoTilt(&projection, 0.0, 400.0, 0.0, 240.0, 0.0, 1.0, true);
+	Mtx_OrthoTilt(&projectionTop, -200.0f, 200.0f, 0.0f, 240.0f, 0.0f, 1.0f, true);
+	Mtx_OrthoTilt(&projectionBot, -160.0f, 160.0f, 0.0f, 240.0f, 0.0f, 1.0f, true);
 
 	// Create the VBO (vertex buffer object)
 	vbo_data = linearAlloc(sizeof(vertex_list));
@@ -69,11 +69,14 @@ static void sceneInit(void)
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 }
 
-static void sceneRender(void)
+static void sceneRender(float a, bool top)
 {
-        printf("update uniforms");
+	float b = (cosf(C3D_Angle(a)) + 1.0f) / 2.0f;
+	if (!top) b = 1.0f - b;
+
+	C3D_FixedAttribSet(1, b, b, b, 1.0);
 	// Update the uniforms
-	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection);
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, top ? &projectionTop : &projectionBot);
 
 	// Draw the VBO
 	C3D_DrawArrays(GPU_TRIANGLES, 0, vertex_list_count);
@@ -93,17 +96,19 @@ int main()
 {
 	// Initialize graphics
 	gfxInitDefault();
-        consoleInit(GFX_BOTTOM, NULL);
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
-        printf("initc3d");
+
 	// Initialize the render target
-	C3D_RenderTarget* target = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
-	C3D_RenderTargetSetOutput(target, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
-        printf("inittar");
+	C3D_RenderTarget* top = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
+	C3D_RenderTargetSetOutput(top, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
+	C3D_RenderTarget* bot = C3D_RenderTargetCreate(240, 320, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
+	C3D_RenderTargetSetOutput(bot, GFX_BOTTOM, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
+
 	// Initialize the scene
 	sceneInit();
-        printf("initsc");
+
 	// Main loop
+	float count = 0.0f;
 	while (aptMainLoop())
 	{
 		hidScanInput();
@@ -115,10 +120,14 @@ int main()
 
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-			C3D_RenderTargetClear(target, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
-			C3D_FrameDrawOn(target);
-			sceneRender();
+			C3D_RenderTargetClear(top, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
+			C3D_FrameDrawOn(top);
+			sceneRender(count, true);
+			C3D_RenderTargetClear(bot, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
+			C3D_FrameDrawOn(bot);
+			sceneRender(count, false);
 		C3D_FrameEnd(0);
+		count += 1/128.0f;
 	}
 
 	// Deinitialize the scene
