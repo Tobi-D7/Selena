@@ -594,7 +594,7 @@ void CGNeoGenerateFunction(neocode_function *Function, std::ostream &os) {
 static std::string OutputName(int Register) {
   const std::string ONames[9] = {
       "position",  "quaternion", "color", "texcoord0", "texcoord0w",
-      "texcoord1", "texcoord2",  "view",   "unk",
+      "texcoord1", "texcoord2",  "unk",  "view",  "dummy" ,
   };
 
   return ONames[Register - 1];
