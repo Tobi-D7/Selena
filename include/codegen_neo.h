@@ -102,8 +102,8 @@ struct neocode_variable {
     OUTPUT_TEXCOORD0W,
     OUTPUT_TEXCOORD1,
     OUTPUT_TEXCOORD2,
-    OUTPUT_UNK,
     OUTPUT_VIEW,
+    OUTPUT_UNK,
   };
 
   std::string Name;
