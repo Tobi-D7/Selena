@@ -416,6 +416,41 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                neocode_variable::OUTPUT_COLOR,
                                                {0},
                                                0});
+  Program.Globals.push_back((neocode_variable){"gl_Texcoord0",
+                                               "vec4",
+                                               ast_node::STRUCT,
+                                               Program.Registers.AllocOutput(),
+                                               neocode_variable::OUTPUT_TEXCOORD0,
+                                               {0},
+                                               0});
+  Program.Globals.push_back((neocode_variable){"gl_Texcoord0w",
+                                               "vec4",
+                                               ast_node::STRUCT,
+                                               Program.Registers.AllocOutput(),
+                                               neocode_variable::OUTPUT_TEXCOORD0W,
+                                               {0},
+                                               0});
+  Program.Globals.push_back((neocode_variable){"gl_Texcoord1",
+                                               "vec4",
+                                               ast_node::STRUCT,
+                                               Program.Registers.AllocOutput(),
+                                               neocode_variable::OUTPUT_TEXCOORD1,
+                                               {0},
+                                               0});
+  Program.Globals.push_back((neocode_variable){"gl_Texcoord2",
+                                               "vec4",
+                                               ast_node::STRUCT,
+                                               Program.Registers.AllocOutput(),
+                                               neocode_variable::OUTPUT_TEXCOORD2,
+                                               {0},
+                                               0});
+  Program.Globals.push_back((neocode_variable){"gl_View",
+                                               "vec4",
+                                               ast_node::STRUCT,
+                                               Program.Registers.AllocOutput(),
+                                               neocode_variable::OUTPUT_VIEW,
+                                               {0},
+                                               0});
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
