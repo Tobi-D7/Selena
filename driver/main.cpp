@@ -278,12 +278,17 @@ int main(int argc, char **argv) {
     PrintAST(ASTRoot, 0);
   neocode_program Program = CGNeoBuildProgramInstance(&ASTRoot, &SymbolTable);
   if (OutputFilePath) {
+    if (OutputASM){
+      
+      std::ofstream Fsn;
+      CGNeoGenerateCode(&Program, Fsn);
+      char* FSG = SlurpFile(OutputFilePath, &Size);
+      std::cout << FSG << "\n";
+    }
     std::ofstream Fs;
     Fs.open(OutputFilePath);
-    if (OutputASM)
-      CGNeoGenerateCode(&Program, Fs);
-    else
-      CGShbinGenerateCode(&Program, Fs);
+    
+    CGShbinGenerateCode(&Program, Fs);
   }
   return 0;
 }
