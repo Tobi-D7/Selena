@@ -38,7 +38,7 @@ static void sceneInit(void)
 	C3D_BindProgram(&program);
         printf("initshader");
 	// Get the location of the uniforms
-	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "projection");
+	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "Projection");
         printf("loqdet shader");
 	// Configure attributes for use with the vertex shader
 	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
