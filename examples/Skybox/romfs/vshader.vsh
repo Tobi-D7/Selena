@@ -1,6 +1,7 @@
 
 #version 330 core
-layout (location = 0) in vec3 aPos;
+
+attribute vec3 aPos;
 
 layout (location = 4) out vec4 outtc0;
 
