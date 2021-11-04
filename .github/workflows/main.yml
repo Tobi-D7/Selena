@@ -38,13 +38,13 @@ jobs:
           ls -r *
           mkdir -p ~/artifacts
           #cp selenacc ~/artifacts
-          cp lib/libselena.a ~/artifacts
+          cp lib/*.a ~/artifacts
           cp -r include ~/artifacts
           mkdir cmbuild && cd cmbuild
           cmake ..
           make
           make install
-          cp selenacc ~/artifacts
+          cp nsctrcc ~/artifacts
           cd ../examples
           make
           cp bin/* ~/artifacts
