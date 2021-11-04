@@ -6,6 +6,6 @@ attribute vec4 v1;
 
 void main() {
   NS_Position = Projection * Position;
-  NS_FrontColor = v1;
+  NS_Color = v1;
   asm("end");
 }
