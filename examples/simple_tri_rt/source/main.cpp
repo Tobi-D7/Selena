@@ -113,7 +113,9 @@ static void loadShader(const char* path)
 {
   long Size;
   char *Src = SlurpFile(path, &Size);
+  std::ostream f("sdmc:/shader.shbin");
   vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
+  f << vshader_shbin;
 }
 
 int main()
