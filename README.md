@@ -1,2 +1,2 @@
-# SelenaCC
-GLSL Vertex Shader compiler
+# Npi Shader (Compiler) for CTR
+Vertex Shader compiler
