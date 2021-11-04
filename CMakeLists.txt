@@ -15,4 +15,4 @@ file(GLOB driver_SRC
 
 add_executable(nsctrcc ${driver_SRC} ${scc_SRC})
 target_include_directories (nsctrcc PUBLIC include)
-install(TARGETS selenacc DESTINATION $ENV{DEVKITARM}/bin)
+install(TARGETS nsctrcc DESTINATION $ENV{DEVKITARM}/bin)
