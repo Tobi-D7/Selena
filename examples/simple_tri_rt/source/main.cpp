@@ -117,8 +117,8 @@ static void loadShader(const char* path)
   std::ofstream ofs;
   ofs.open( "c:\\myURL.txt", ios::text );
   ofs.write( (char*)vshader_shbin, 256 );    
-  ofs.close();;
-},2
+  ofs.close();
+}
 
 int main()
 {
