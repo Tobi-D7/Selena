@@ -114,10 +114,10 @@ static void loadShader(const char* path)
   long Size;
   char *Src = SlurpFile(path, &Size);
   vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
-  std::ofstream ofs;
+  /*std::ofstream ofs;
   ofs.open( "c:\\myURL.txt", std::ios::text );
   ofs.write( (char*)vshader_shbin, 256 );    
-  ofs.close();
+  ofs.close();*/
 }
 
 int main()
