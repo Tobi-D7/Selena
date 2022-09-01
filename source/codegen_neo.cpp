@@ -415,7 +415,7 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                neocode_variable::OUTPUT_COLOR,
                                                {0},
                                                0});
-  /"Program.Globals.push_back((neocode_variable){"NS_Texcoord0",
+  /*Program.Globals.push_back((neocode_variable){"NS_Texcoord0",
                                                "vec2",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
