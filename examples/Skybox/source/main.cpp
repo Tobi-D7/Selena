@@ -6,6 +6,7 @@
 #include <string.h>
 #include <cstring>
 #include <fstream>
+#include <iostream>
 #include <selena/compiler.h>
 
 static char* vshader_shbin;
@@ -211,7 +212,9 @@ static void loadShader(const char* path)
 {
   long Size;
   char *Src = SlurpFile(path, &Size);
+  std::cout << Src << std::endl;
   vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
+  
 }
 
 int main()
