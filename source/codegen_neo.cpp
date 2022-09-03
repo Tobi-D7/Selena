@@ -450,13 +450,13 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                neocode_variable::OUTPUT_VIEW,
                                                {0},
                                                0});
-  Program.Globals.push_back((neocode_variable){"NS_Normal",
+ /* Program.Globals.push_back((neocode_variable){"NS_Normal",
                                                "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_QUATERNION,
                                                {0},
-                                               0});
+                                               0});*/
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
