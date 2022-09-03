@@ -7,7 +7,7 @@ attribute vec3 aPos;
 void main()
 {
     NS_Texture0 = vec2(aPos.x, aPos.y);
-    //NS_Texture0w = vec3(1.0, 1.0, 1.0);
+    NS_Texture0w = vec3(1.0, 1.0, 1.0);
     NS_Color = aPos;
     NS_Position = projection * view * vec4(aPos, 1.0);
     asm("end");
