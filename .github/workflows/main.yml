@@ -44,7 +44,7 @@ jobs:
           cmake ..
           make
           make install
-          cp nsctrcc ~/artifacts
+          cp nslcc ~/artifacts
           cd ../examples
           make
           cp bin/* ~/artifacts
