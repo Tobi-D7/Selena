@@ -125,7 +125,7 @@ int main()
 	// Initialize graphics
 	gfxInitDefault();
   romfsInit();
-  loadShader("romfs:/vshader.vsh");
+  loadShader("romfs:/vshader.nsl");
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
 
 	// Initialize the render target

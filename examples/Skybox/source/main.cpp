@@ -221,7 +221,7 @@ int main()
         consoleInit(GFX_BOTTOM, NULL);
         romfsInit();
         printf("compile shader\n");
-        loadShader("sdmc:/vshader.vsh");
+        loadShader("romfs:/vshader.nsl");
         printf("success\n");
         printf("init c3d\n");
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);

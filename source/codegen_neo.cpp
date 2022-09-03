@@ -415,28 +415,28 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                neocode_variable::OUTPUT_COLOR,
                                                {0},
                                                0});
-  Program.Globals.push_back((neocode_variable){"NS_Texcoord0",
+  Program.Globals.push_back((neocode_variable){"NS_Tecture0",
                                                "vec2",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_TEXCOORD0,
                                                {0},
                                                0});
-  /*Program.Globals.push_back((neocode_variable){"NS_Texcoord0w",
+  Program.Globals.push_back((neocode_variable){"NS_Texture0w",
                                                "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_TEXCOORD0W,
                                                {0},
                                                0});
-  Program.Globals.push_back((neocode_variable){"NS_Texcoord1",
+  Program.Globals.push_back((neocode_variable){"NS_Texture1",
                                                "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_TEXCOORD1,
                                                {0},
                                                0});
-  Program.Globals.push_back((neocode_variable){"NS_Texcoord2",
+  Program.Globals.push_back((neocode_variable){"NS_Texture2",
                                                "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
@@ -450,13 +450,13 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                neocode_variable::OUTPUT_VIEW,
                                                {0},
                                                0});
-  Program.Globals.push_back((neocode_variable){"NS_Normalquat",
+  Program.Globals.push_back((neocode_variable){"NS_Normal",
                                                "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_QUATERNION,
                                                {0},
-                                               0});*/
+                                               0});
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
   Program.Registers.AllocConstant();
@@ -592,7 +592,7 @@ void CGNeoGenerateFunction(neocode_function *Function, std::ostream &os) {
 
 static std::string OutputName(int Register) {
   const std::string ONames[9] = {
-      "position",  "quaternion", "color", "texcoord0", "texcoord0w",
+      "position",  "normalquat", "color", "texcoord0", "texcoord0w",
       "texcoord1", "texcoord2",  "unk",  "view" ,
   };
 

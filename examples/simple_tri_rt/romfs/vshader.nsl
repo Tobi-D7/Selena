@@ -1,11 +1,9 @@
-
 uniform mat4 Projection;
 attribute vec4 Position;
-attribute vec4 v1;
-//const vec4 GREEN = vec4(0.0, 0.0, 1.0, 1.0);
+attribute vec4 inColor;
 
 void main() {
   NS_Position = Projection * Position;
-  NS_Color = v1;
+  NS_Color = inColor;
   asm("end");
 }
