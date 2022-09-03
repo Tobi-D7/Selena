@@ -208,11 +208,17 @@ static char *SlurpFile(const char *FilePath, long *FileSize) {
   return Buffer;
 }
 
+static void ErrorCallback(const char *ErrMsg)
+{
+	std::cout << ErrMsg << std::endl;
+}
+
 static void loadShader(const char* path)
 {
   long Size;
   char *Src = SlurpFile(path, &Size);
   std::cout << Src << std::endl;
+  SelenaSetErrorHandler(ErrorCallback);
   vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
   
 }
