@@ -11,17 +11,22 @@
 	GX_TRANSFER_IN_FORMAT(GX_TRANSFER_FMT_RGBA8) | GX_TRANSFER_OUT_FORMAT(GX_TRANSFER_FMT_RGB8) | \
 	GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO))
 
-typedef struct {
-	float pos[3];
-	float color[4];
-}Vertex;
+typedef struct { float x, y, z; } vertex;
+typedef struct { float r, g, b, a; } color;
 
 
-static const Vertex vertex_list[] =
+static const vertex vertex_list[] =
 {
-	{{ 200.0f, 200.0f, 0.5f }, {1.0f, 0.0f, 0.0f, 1.0f}},
-	{{ 100.0f, 40.0f, 0.5f }, {1.0f, 0.0f, 0.0f, 1.0f}},
-	{{ 300.0f, 40.0f, 0.5f }, {1.0f, 0.0f, 0.0f, 1.0f}},
+	{ 200.0f, 200.0f, 0.5f },
+	{ 100.0f, 40.0f, 0.5f },
+	{ 300.0f, 40.0f, 0.5f },
+};
+
+static const color color_list[] =
+{
+	{ 1.0f, 0.0f, 0.0f, 1.0f },
+	{ 0.0f, 1.0f, 0.0f, 1.0f },
+	{ 0.0f, 0.0f, 1.0f, 1.0f },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -31,7 +36,7 @@ static shaderProgram_s program;
 static int uLoc_projection;
 static C3D_Mtx projection;
 
-static void* vbo_data;
+static void* vbo_data, *vbo_data_clr;
 
 static char* vshader_shbin;
 static int   vshader_shbin_size;
@@ -60,11 +65,14 @@ static void sceneInit(void)
 	// Create the VBO (vertex buffer object)
 	vbo_data = linearAlloc(sizeof(vertex_list));
 	memcpy(vbo_data, vertex_list, sizeof(vertex_list));
+        vbo_data_clr = linearAlloc(sizeof(color_list));
+	memcpy(vbo_data_clr, color_list, sizeof(color_list));
 
 	// Configure buffers
 	C3D_BufInfo* bufInfo = C3D_GetBufInfo();
 	BufInfo_Init(bufInfo);
-	BufInfo_Add(bufInfo, vbo_data, sizeof(Vertex), 2, 0x10);
+	BufInfo_Add(bufInfo, vbo_data, sizeof(vertex), 1, 0x0);
+        BufInfo_Add(bufInfo, vbo_data_clr, sizeof(color),    1, 0x1);
 
 	// Configure the first fragment shading substage to just pass through the vertex color
 	// See https://www.opengl.org/sdk/docs/man2/xhtml/glTexEnv.xml for more insight
@@ -87,15 +95,39 @@ static void sceneExit(void)
 {
 	// Free the VBO
 	linearFree(vbo_data);
+        linearFree(vbo_data_clr);
 
 	// Free the shader program
 	shaderProgramFree(&program);
 	DVLB_Free(vshader_dvlb);
 }
 
+static char *SlurpFile(const char *FilePath, long *FileSize) {
+  std::ifstream is(FilePath);
+  if (!is)
+    return nullptr;
+  is.seekg(0, std::ios::end);
+  long Length = is.tellg();
+  is.seekg(0, std::ios::beg);
+  char *Buffer = new char[Length + 1];
+  memset(Buffer, 0, Length);
+  is.read(Buffer, Length);
+  is.close();
+
+  if (FileSize)
+    *FileSize = Length;
+  return Buffer;
+}
+
 static void loadShader(const char* path)
 {
-  vshader_shbin = SelenaCompileShaderFile(path, &vshader_shbin_size);
+  long Size;
+  char *Src = SlurpFile(path, &Size);
+  vshader_shbin = SelenaCompileShaderSource(Src, &vshader_shbin_size);
+  /*std::ofstream ofs;
+  ofs.open( "c:\\myURL.txt", std::ios::text );
+  ofs.write( (char*)vshader_shbin, 256 );    
+  ofs.close();*/
 }
 
 int main()

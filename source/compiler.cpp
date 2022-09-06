@@ -4,6 +4,7 @@
 #include "parser.h"
 #include <cstring>
 #include <cstdlib>
+#include <fstream>
 
 static void (*UserErrorHandler)(const char *Msg) = nullptr;
 
@@ -12,6 +13,23 @@ static void ErrorCallback(const std::string &ErrMsg,
                           int LineOffset) {
   std::string Msg = "error:" + std::to_string(LineNumber) + ":" + std::to_string(LineOffset) + ErrMsg + "\n" + OffendingLine + "\n";
   if (UserErrorHandler) UserErrorHandler(Msg.c_str());
+}
+
+static char *SlurpFile(const char *FilePath, long *FileSize) {
+  std::ifstream is(FilePath);
+  if (!is)
+    return nullptr;
+  is.seekg(0, std::ios::end);
+  long Length = is.tellg();
+  is.seekg(0, std::ios::beg);
+  char *Buffer = new char[Length + 1];
+  memset(Buffer, 0, Length);
+  is.read(Buffer, Length);
+  is.close();
+
+  if (FileSize)
+    *FileSize = Length;
+  return Buffer;
 }
 
 extern "C" {
@@ -36,6 +54,13 @@ char *SelenaCompileShaderSource(const char *Src, int *BinSize) {
   memcpy(Shbin, ss.str().c_str(), ss.str().length());
   *BinSize = ss.str().length();
   return Shbin;
+}
+
+char* SelenaCompileShaderFile(const char *Path, int *BinSize)
+{
+    long Size;
+    char *Src = SlurpFile(Path, &Size);
+    return SelenaCompileShaderSource(Src, BinSize);
 }
 
 }

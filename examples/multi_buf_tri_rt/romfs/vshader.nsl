@@ -1,0 +1,9 @@
+uniform mat4 Projection;
+attribute vec4 Position;
+attribute vec4 inColor;
+
+void main() {
+  NS_Position = Projection * Position;
+  NS_Color = inColor;
+  asm("end");
+}
