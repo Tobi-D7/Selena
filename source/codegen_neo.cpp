@@ -416,7 +416,7 @@ neocode_program CGNeoBuildProgramInstance(ast_node *ASTNode, symtable *S) {
                                                {0},
                                                0});
   Program.Globals.push_back((neocode_variable){"NS_Tecture0",
-                                               "vec2",
+                                               "vec4",
                                                ast_node::STRUCT,
                                                Program.Registers.AllocOutput(),
                                                neocode_variable::OUTPUT_TEXCOORD0,
@@ -619,7 +619,7 @@ static void WriteVarible(neocode_variable &V, std::ostream &os) {
 }
 
 void CGNeoGenerateCode(neocode_program *Program, std::ostream &os) {
-  os << ".alias SelenaCCVersion c95 as (0.0, 0.0, 0.0, 0.1)" << std::endl;
+  os << ".alias NslCCVersion c95 as (0.0, 0.0, 0.0, 0.1)" << std::endl;
   for (neocode_variable &V : Program->Globals) {
     WriteVarible(V, os);
   }
