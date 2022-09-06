@@ -12,12 +12,21 @@
 	GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO))
 
 typedef struct { float x, y, z; } vertex;
+typedef struct { float r, g, b, a; } color;
+
 
 static const vertex vertex_list[] =
 {
 	{ 200.0f, 200.0f, 0.5f },
 	{ 100.0f, 40.0f, 0.5f },
 	{ 300.0f, 40.0f, 0.5f },
+};
+
+static const color color_list[] =
+{
+	{ 1.0f, 0.0f, 0.0f, 1.0f },
+	{ 0.0f, 1.0f, 0.0f, 1.0f },
+	{ 0.0f, 0.0f, 1.0f, 1.0f },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -27,7 +36,7 @@ static shaderProgram_s program;
 static int uLoc_projection;
 static C3D_Mtx projection;
 
-static void* vbo_data;
+static void* vbo_data, *vbo_data_clr;
 
 static char* vshader_shbin;
 static int   vshader_shbin_size;
@@ -48,10 +57,7 @@ static void sceneInit(void)
 	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
 	AttrInfo_Init(attrInfo);
 	AttrInfo_AddLoader(attrInfo, 0, GPU_FLOAT, 3); // v0=position
-	AttrInfo_AddFixed(attrInfo, 1); // v1=color
-
-	// Set the fixed attribute (color) to solid white
-	C3D_FixedAttribSet(1, 1.0, 0.0, 0.0, 1.0);
+	AttrInfo_AddLoader(attrInfo, 1, GPU_FLOAT, 4); // v1=color
 
 	// Compute the projection matrix
 	Mtx_OrthoTilt(&projection, 0.0, 400.0, 0.0, 240.0, 0.0, 1.0, true);
@@ -59,17 +65,20 @@ static void sceneInit(void)
 	// Create the VBO (vertex buffer object)
 	vbo_data = linearAlloc(sizeof(vertex_list));
 	memcpy(vbo_data, vertex_list, sizeof(vertex_list));
+        vbo_data_clr = linearAlloc(sizeof(color_list));
+	memcpy(vbo_data_clr, color_list, sizeof(color_list));
 
 	// Configure buffers
 	C3D_BufInfo* bufInfo = C3D_GetBufInfo();
 	BufInfo_Init(bufInfo);
 	BufInfo_Add(bufInfo, vbo_data, sizeof(vertex), 1, 0x0);
+        BufInfo_Add(bufInfo, vbo_data_clr, sizeof(color),    1, 0x1);
 
 	// Configure the first fragment shading substage to just pass through the vertex color
 	// See https://www.opengl.org/sdk/docs/man2/xhtml/glTexEnv.xml for more insight
 	C3D_TexEnv* env = C3D_GetTexEnv(0);
 	C3D_TexEnvInit(env);
-	C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR, GPU_PRIMARY_COLOR);
+	C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 }
 }
@@ -86,6 +95,7 @@ static void sceneExit(void)
 {
 	// Free the VBO
 	linearFree(vbo_data);
+        linearFree(vbo_data_clr);
 
 	// Free the shader program
 	shaderProgramFree(&program);
