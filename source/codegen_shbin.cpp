@@ -163,7 +163,7 @@ int shbin_gen::GenInstruction(neocode_instruction *Instruction) {
 
   int OpDesc = OP_DESC(DstMask, Src1Comp, Src2Comp, 0);
   int OpDescIndex = -1;
-  for (int i = 0; i < OpDescTable.size(); ++i) {
+  for (int i = 0; i < (int)OpDescTable.size(); ++i) {
     op_desc_entry &e = OpDescTable[i];
     if (e.Swizzle == OpDesc) {
       OpDescIndex = i;

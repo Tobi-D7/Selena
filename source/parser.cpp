@@ -317,7 +317,7 @@ parse_node parser::ParseAssignmentOperator() {
 parse_node parser::ParseFunctionCall() {
   parse_node N = parse_node(parse_node::FUNCTION_CALL);
   if (!(Token.Type == token::IDENTIFIER ||
-        IsConstructorIdentifier(Token.Type) || Token.Type == token::ASM)) {
+        IsConstructorIdentifier(Token.Type) || Token.Type == token::ASM) || IsConstructorIdentifier(Token.Type)) {
     GenError("expected function identifier or type constructor before token " +
                  TokenToString(Token),
              Token);

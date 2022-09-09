@@ -2,7 +2,7 @@
 #include "lexer.h"
 
 int symtable::GetIndex(std::string Name) {
-  for (int i = 0; i < symbols.size(); ++i) {
+  for (int i = 0; i < (int)symbols.size(); ++i) {
     if (symbols[i].Name.compare(Name) == 0) {
       return i;
     }
@@ -24,7 +24,7 @@ symtable_entry *symtable::Lookup(std::string Name) {
 }
 
 symtable_entry *symtable::FindFirstOfType(int T) {
-  for (int i = 0; i < symbols.size(); ++i) {
+  for (int i = 0; i < (int)symbols.size(); ++i) {
     if (symbols[i].SymbolType == T) {
       return &symbols[i];
     }
@@ -88,6 +88,9 @@ symtable::symtable() {
 
   Insert("true", token::BOOLCONSTANT);
   Insert("false", token::BOOLCONSTANT);
+
+  Insert("NS_End", token::NS_END);
+  Insert("NS_Out", token::NS_OUT);
 
   // TODO reserved keywords
   Insert("asm", token::ASM);

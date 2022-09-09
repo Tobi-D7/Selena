@@ -15,7 +15,7 @@ include $(DEVKITARM)/3ds_rules
 # DATA is a list of directories containing data files
 # INCLUDES is a list of directories containing header files
 #---------------------------------------------------------------------------------
-TARGET		:=	nsctr
+TARGET		:=	nsl
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
@@ -31,7 +31,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -D__3DS__
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 
 ASFLAGS	:=	-g $(ARCH)
 
@@ -95,8 +95,8 @@ $(BUILD): lib
 #---------------------------------------------------------------------------------
 install:
 	@cp lib/* $(DEVKITPRO)/libctru/lib/
-	mkdir -p $(DEVKITPRO)/libctru/include/selena/
-	@cp -r include/* $(DEVKITPRO)/libctru/include/selena/
+	mkdir -p $(DEVKITPRO)/libctru/include/nsl/
+	@cp -r include/* $(DEVKITPRO)/libctru/include/nsl/
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...

@@ -38,7 +38,7 @@ static int GetInstructionFromIdentifier(std::string Name) {
 
 static int GetSwizzleFromIdentifier(std::string Id) {
   int Swizzle = 0;
-  for (int i = 0; i < 4 && i < (Id.length() + 1); ++i) {
+  for (int i = 0; i < 4 && i < (int)(Id.length() + 1); ++i) {
     switch (Id[i]) {
     case 'x':
       Swizzle |= (1 << (i * 4));
