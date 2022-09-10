@@ -89,9 +89,6 @@ symtable::symtable() {
   Insert("true", token::BOOLCONSTANT);
   Insert("false", token::BOOLCONSTANT);
 
-  Insert("NS_End", token::NS_END);
-  Insert("NS_Out", token::NS_OUT);
-
   // TODO reserved keywords
   Insert("asm", token::ASM);
   Insert("inline", token::INLINE);

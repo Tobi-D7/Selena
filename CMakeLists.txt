@@ -21,8 +21,11 @@ file(GLOB driver_SRC
 
 add_executable(nslcc WIN32 ${driver_SRC} ${scc_SRC})
 target_include_directories (nslcc PUBLIC include)
-install(TARGETS nslcc DESTINATION $ENV{DEVKITARM}/bin)
-
+if(WIN32)
+    install(TARGETS nslcc DESTINATION $ENV{DEVKITARM}/bin)
+else()
+install(TARGETS nslcc DESTINATION /bin/)
+endif()
 if( MSVC )
     if(${CMAKE_VERSION} VERSION_LESS "3.6.0") 
         message( "\n\t[ WARNING ]\n\n\tCMake version lower than 3.6.\n\n\t - Please update CMake and rerun; OR\n\t - Manually set 'nslcc' as StartUp Project in Visual Studio.\n" )

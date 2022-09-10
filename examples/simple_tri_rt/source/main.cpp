@@ -2,7 +2,7 @@
 #include <citro3d.h>
 #include <cstring>
 #include <fstream>
-#include <selena/compiler.h>
+#include <nsl/compiler.h>
 
 #define CLEAR_COLOR 0x68B0D8FF
 

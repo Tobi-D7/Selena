@@ -115,8 +115,6 @@ struct token {
 
     DQSTRING,
     SQSTRING,
-    NS_OUT,
-    NS_END,
 
     // reserved
     ASM,
