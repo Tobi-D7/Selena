@@ -1,3 +1,4 @@
+# !!! THIS PROJECT IS DISCONTINUED !!!
 # Npi Shading Language for the 3ds
 Based on GLSL lang
 
